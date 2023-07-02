@@ -1,18 +1,6 @@
-/*
-Objetivos de la tercer pre-entrega:
-- Usar el DOM ✅
-- Usar eventos ✅
-- Usar storage ✅
-- (Modo PRO) Simular una base de datos ✅
-- (Modo DIOS) Hacer un buscador ✅
-*/
-
-// Esta clase va a simular una base de datos. Vamos a cargar todos los productos
-// de nuestro e-commerce.
 class BaseDeDatos {
   constructor() {
     this.productos = [];
-    // Vamos a cargar todos los productos que tengamos
     this.agregarRegistro(1, "Tododia Jabon", 1730, "5u, Ciruela y Flor de Vanilla", "jabonciruela.png");
     this.agregarRegistro(2, "Tododia Jabon", 1990, "4u, Mandarina y Frambuesa", "jabonfeliz.png");
     this.agregarRegistro(3, "Tododia Anti-Transpirante Desodorante", 820, "Invisible,Avellana", "antiavellana.png");
@@ -32,8 +20,8 @@ class BaseDeDatos {
 
   }
 
-  agregarRegistro(id, nombre, precio, categoria, imagen) {
-    const producto = new Producto(id, nombre, precio, categoria, imagen);
+  agregarRegistro(id, nombre, precio, descripcion, imagen) {
+    const producto = new Producto(id, nombre, precio, descripcion, imagen);
     this.productos.push(producto);
   }
 
@@ -50,7 +38,7 @@ class BaseDeDatos {
   }
 }
 
-// Clase carrito
+
 class Carrito {
   constructor() {
     const carritoStorage = JSON.parse(localStorage.getItem("carrito"));
@@ -70,7 +58,6 @@ class Carrito {
       // Sumar cantidad
       productoEnCarrito.cantidad++;
     } else {
-      // Agregar al carrito
       this.carrito.push({ ...producto, cantidad: 1 });
       localStorage.setItem("carrito", JSON.stringify(this.carrito));
     }
@@ -79,11 +66,9 @@ class Carrito {
 
   quitar(id) {
     const indice = this.carrito.findIndex((producto) => producto.id === id);
-    // Si la cantidad del producto es mayor a 1, le resto
     if (this.carrito[indice].cantidad > 1) {
       this.carrito[indice].cantidad--;
     } else {
-      // Sino, lo borro del carrito
       this.carrito.splice(indice, 1);
     }
     localStorage.setItem("carrito", JSON.stringify(this.carrito));
@@ -106,7 +91,6 @@ class Carrito {
       this.total += producto.precio * producto.cantidad;
       this.totalProductos += producto.cantidad;
     }
-    // Botones de quitar
     const botonesQuitar = document.querySelectorAll(".btnQuitar");
     for (const boton of botonesQuitar) {
       boton.onclick = (event) => {
@@ -114,27 +98,25 @@ class Carrito {
         this.quitar(Number(boton.dataset.id));
       };
     }
-    // Actualizamos variables carrito
     spanCantidadProductos.innerText = this.totalProductos;
     spanTotalCarrito.innerText = this.total;
   }
 }
 
-// Clase molde para los productos
 class Producto {
-  constructor(id, nombre, precio, categoria, imagen = false) {
+  constructor(id, nombre, precio, descripcion, imagen = false) {
     this.id = id;
     this.nombre = nombre;
     this.precio = precio;
-    this.categoria = categoria;
+    this.descripcion = descripcion;
     this.imagen = imagen;
   }
 }
 
-// Objeto de la base de datos
+
 const bd = new BaseDeDatos();
 
-// Elementos
+
 const divProductos = document.querySelector("#productos");
 const divCarrito = document.querySelector("#carrito");
 const spanCantidadProductos = document.querySelector("#cantidadProductos");
@@ -142,10 +124,8 @@ const spanTotalCarrito = document.querySelector("#totalCarrito");
 const formBuscar = document.querySelector("#formBuscar");
 const inputBuscar = document.querySelector("#inputBuscar");
 
-// Llamamos a la función
-cargarProductos(bd.traerRegistros());
 
-// Muestra los registros de la base de datos en nuestro HTML
+cargarProductos(bd.traerRegistros());
 function cargarProductos(productos) {
   divProductos.innerHTML = "";
   for (const producto of productos) {
@@ -153,13 +133,12 @@ function cargarProductos(productos) {
         <div class="producto container">
             <h3>${producto.nombre}</h3>
             <p>$${producto.precio}</p>
-            <h6>${producto.categoria}</h6>
+            <h6>${producto.descripcion}</h6>
             <img class="img" src="img/${producto.imagen}" />
             <p><a href="#" class="btnAgregar" data-id="${producto.id}">Agregar al carrito</a></p>
         </div>
     `;
   }
-  // Botones de agregar al carrito
   const botonesAgregar = document.querySelectorAll(".btnAgregar");
   for (const boton of botonesAgregar) {
     boton.addEventListener("click", (event) => {
@@ -170,8 +149,6 @@ function cargarProductos(productos) {
     });
   }
 }
-
-// Evento buscador
 formBuscar.addEventListener("submit", (event) => {
   event.preventDefault();
   const palabra = inputBuscar.value;
@@ -183,7 +160,6 @@ inputBuscar.addEventListener("keyup", (event) => {
   cargarProductos(bd.registrosPorNombre(palabra.toLowerCase()));
 });
 
-// Objeto carrito
 const carrito = new Carrito();
 
 
