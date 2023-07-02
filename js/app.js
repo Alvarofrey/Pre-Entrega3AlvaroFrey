@@ -13,16 +13,15 @@ class BaseDeDatos {
   constructor() {
     this.productos = [];
     // Vamos a cargar todos los productos que tengamos
-    this.agregarRegistro(1, "Tododia Jabon", 1730, "5u Ciruela y Flor de Vanilla", "jabonciruela.png");
-    this.agregarRegistro(2, "Tododia Jabon", 1990, "4u Mandarina y Frambuesa", "jabonfeliz.png");
-    this.agregarRegistro(3, "Tododia Antitranspirante", 820, "Invisible,Avellana", "antiavellana.png");
-    this.agregarRegistro(4, "Kaiak Perfume Femenino", 8500, "100ml,Moderada,Citrica,Rosa", "kaiakfem.png");
-    this.agregarRegistro(5, "Kaiak Perfume Aventura Femenino", 8000, "100ml,Moderada,Floral,Notas Marinas", "kaiakaventura.png");
-    this.agregarRegistro(6, "Aguas Colonia", 4810, "150ml,Frutas Tropicales,Jazmin", "coloniaaguas.png");
+    this.agregarRegistro(1, "Tododia Jabon", 1730, "5u, Ciruela y Flor de Vanilla", "jabonciruela.png");
+    this.agregarRegistro(2, "Tododia Jabon", 1990, "4u, Mandarina y Frambuesa", "jabonfeliz.png");
+    this.agregarRegistro(3, "Tododia Anti-Transpirante Desodorante", 820, "Invisible,Avellana", "antiavellana.png");
+    this.agregarRegistro(4, "Kaiak Perfume Femenino", 8500, "100ml, Moderada Citrica Rosa", "kaiakfem.png");
+    this.agregarRegistro(5, "Kaiak Perfume Aventura Femenino", 8000, "100ml,,Jazmin", "coloniaaguas.png");
     this.agregarRegistro(7, "Ekos Perfume Maracuyà", 5500, "150ml,Leve,Cedro,Frutal", "ekosmaracuyá.png");
-    this.agregarRegistro(8, "Tododia Body Splash", 5500, "200ml,Leve,Fresca,Limon,Flores", "bodysplashlimon.png");
-    this.agregarRegistro(9, "Tododia Crema Corporal", 3430, "400ml,Nuez Pecan,Cacao,Linaza,Prebiotico", "cremanuez.png");
-    this.agregarRegistro(10, "Tododia Crema Pies", 1370, "50ml,Cacao,Linaza,Limon,", "cremapieslimon.png");
+    this.agregarRegistro(8, "Tododia Body Splash", 5500, "200ml, Leve Fresca Limon Flores", "bodysplashlimon.png");
+    this.agregarRegistro(9, "Tododia Crema Corporal", 3430, "400ml,Nuez Pecan Cacao Linaza,Prebiotico", "cremanuez.png");
+    this.agregarRegistro(10, "Tododia Crema Pies", 1370, "50ml,Cacao Linaza,Limon,", "cremapieslimon.png");
     this.agregarRegistro(11, "Ekos Crema Manos", 1400, "40g,Hidrata y Regenera la Piel,Aroma Pitanga Preta", "cremaekospitanga.png");
     this.agregarRegistro(12, "Ekos Crema Manos", 1400, "40g,Hidrata y Regenera la Piel De las Manos e Uñas,Aroma Castañas ", "cremaekoscastanha.png");
     this.agregarRegistro(13, "Ekos Crema Manos", 1400, "40mg,Hidrata y Regenera la Piel De las Manos Aroma Ish Pink", "cremasekosishpink.png");
@@ -98,11 +97,10 @@ class Carrito {
     for (const producto of this.carrito) {
       divCarrito.innerHTML += `
       <div class="lista_carrito">
-      
-            <h4>${producto.nombre}</h4>
+            <h6>${producto.nombre}</h6>
             <p>$${producto.precio}</p>
             <p>Cantidad: ${producto.cantidad}</p>
-            <a href="#" data-id="${producto.id}" class="btnQuitar">Quitar del carrito</a>
+            <a href="#" data-id="${producto.id}" class="btnQuitar">Quitar</a>
         </div>
     `;
       this.total += producto.precio * producto.cantidad;
@@ -152,12 +150,12 @@ function cargarProductos(productos) {
   divProductos.innerHTML = "";
   for (const producto of productos) {
     divProductos.innerHTML += `
-        <div class="producto">
+        <div class="producto container">
             <h3>${producto.nombre}</h3>
             <p>$${producto.precio}</p>
             <h6>${producto.categoria}</h6>
             <img class="img" src="img/${producto.imagen}" />
-            <p><a href="#carrito" class="btnAgregar" data-id="${producto.id}">Agregar al carrito</a></p>
+            <p><a href="#" class="btnAgregar" data-id="${producto.id}">Agregar al carrito</a></p>
         </div>
     `;
   }
